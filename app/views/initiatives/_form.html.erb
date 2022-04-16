@@ -1,0 +1,37 @@
+<%= form_with(model: initiative) do |form| %>
+  <% if initiative.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(initiative.errors.count, "error") %> prohibited this initiative from being saved:</h2>
+
+      <ul>
+        <% initiative.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :category, style: "display: block" %>
+    <%= form.text_field :category %>
+  </div>
+
+  <div>
+    <%= form.label :event_date, style: "display: block" %>
+    <%= form.datetime_field :event_date %>
+  </div>
+
+  <div>
+    <%= form.label :participants_number, style: "display: block" %>
+    <%= form.number_field :participants_number %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

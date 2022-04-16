@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @initiative %>
+
+<div>
+  <%= link_to "Edit this initiative", edit_initiative_path(@initiative) %> |
+  <%= link_to "Back to initiatives", initiatives_path %>
+
+  <%= button_to "Destroy this initiative", @initiative, method: :delete %>
+</div>

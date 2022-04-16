@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Initiatives</h1>
+
+<div id="initiatives">
+  <% @initiatives.each do |initiative| %>
+    <%= render initiative %>
+    <p>
+      <%= link_to "Show this initiative", initiative %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New initiative", new_initiative_path %>
