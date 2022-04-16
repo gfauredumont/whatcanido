@@ -1,0 +1,57 @@
+# Use this file with docker-compose
+# https://docs.docker.com/compose/install/
+version: '3.7'
+
+services:
+  db:
+    image: postgres:14.0
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+    - './docker/volumes/postgres:/var/lib/postgresql/data'
+    networks:
+      - app_internal
+
+  # redis:
+  #   image: redis:6.2.6
+  #   command: --port 6380
+  #   ports:
+  #     - '6380:6380'
+  #   volumes:
+  #     - './docker/volumes/redis:/data'
+  #   networks:
+  #     - app_internal
+
+  web:
+    build: .
+    tty: true
+    command: bash -c "rm -rf tmp/cache/* && rm -f tmp/pids/server.pid && foreman start -f Procfile.dev"
+    volumes:
+      - .:/webapp
+    ports:
+      - "4000:3000"
+    depends_on:
+      - db
+      # - mailcatcher
+      # - redis
+    env_file:
+      - '.env.web'
+      - '.env.perso'
+    networks:
+      - app_internal
+      - app_external
+
+  # mailcatcher:
+  #   image: djfarrelly/maildev
+  #   ports:
+  #     - "1090:80"
+  #   networks:
+  #     - app_internal
+  #     - app_external
+
+networks:
+  app_external:
+    name: app_external
+  app_internal:
+    name: app_internal
